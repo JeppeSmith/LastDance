@@ -32,6 +32,14 @@ public class Recipe {
         this.imageURL = imageURL;
     }
 
+    public Recipe(int id, String name, String description, String imageURL, String fileURL) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.imageURL = imageURL;
+        this.fileURL = fileURL;
+    }
+
 
     public int getId() {
         return id;
