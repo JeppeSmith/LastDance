@@ -3,15 +3,27 @@ let recipes = []
 
 let file = {}
 let files = []
+//TODO:
+/*
+    get files
+    delete file
+    update recipe
+
+*/
 
 async function postRecipe() {
+    let doc = {
+        name: 'Creative Genius',
+        description: "Just a penguin going to work",
+        imageURL: "/uploads/test.png"
+    }
     try {
-        let response = await fetch('/recipes', (req, res), {
+        let response = await fetch('/recipes', {
             method: 'POST',
-            body: recipe
+            body: JSON.stringify(doc)
         })
-        console.log("Posted Recipe");
-    } catch (error) {
+        console.log("Posted Recipe" + response);
+    } catch (error) { 
         console.log(error)
     }
 
@@ -19,20 +31,34 @@ async function postRecipe() {
 
 async function deleteRecipe() {
     try {
-        let response = await fetch(`/recipes/${id}`(req, res), {
-            method: 'DELETE'
+        id = 1
+        let doc = {
+            id: 1,
+            name: 'Creative Genius',
+            description: "Just a penguin going to work",
+            imageURL: "/uploads/test.png"
+        }
+        let response = await fetch(`/recipes/${id}`, {
+            method: 'DELETE',
+            body: JSON.stringify(doc) 
         });
         console.log(response)
     } catch (error) {
         console.log(error)
     }
-
 }
+
 async function postFile() {
     try {
-        let response = await fetch('/uploads', (req, res), {
+        let files = document.querySelector("#file").files
+        let formData = new FormData();
+        for(let file of files){
+            formData.append('files', file, file.name)
+        }
+        console.log(formData)
+        let response = await fetch('/uploads', {
             method: 'POST',
-            body: file
+            body: formData
         })
         console.log(response)
     } catch (error) {
@@ -40,6 +66,7 @@ async function postFile() {
     }
 
 }
+//TODO
 async function getFiles() {
     try {
         let response = await fetch('/files')
@@ -57,6 +84,7 @@ async function getFiles() {
         console.log(error)
     }
 }
+//TODO
 async function deleteFile(id) {
     try {
         let response = await fetch(`/files/${id}`)
@@ -64,16 +92,18 @@ async function deleteFile(id) {
     } catch (e) {
         console.log(e)
     }
-
 }
+
 async function getRecipeById(id) {
     try {
         let response = await fetch(`/recipes/${id}`)
         recipe = await response.json();
-        let html = document.querySelector('');
+        let html = document.querySelector('.Returns');
         html.innerHTML = `
         <div>
-        
+             <img src='${recipe.imageURL}' alt="Recipe Image"> 
+                <h2> ${recipe.name} ${recipe.id}</h2>
+                <p> ${recipe.description} </p>
         </div>
     `
     } catch (error) {
@@ -81,15 +111,22 @@ async function getRecipeById(id) {
     }
 
 }
+
 async function getRecipeByName(name) {
     try {
         let response = await fetch(`recipes/name/${name}`)
         recipe = await response.json();
-        let html = document.querySelector('');
+        console.log(recipe)
+        let html = document.querySelector('.Returns');
+        recipe.map(recipe =>{
         html.innerHTML = `
         <div>
+            <img src='${recipe.imageURL}' alt="Recipe Image"> 
+            <h2> ${recipe.name} ${recipe.id}</h2>
+            <p> ${recipe.description} </p>
         </div> 
     `
+    })
     } catch (error) {
         console.log(error)
     }
@@ -107,8 +144,8 @@ async function getRecipes() {
         recipes.map(recipe => {
             html.innerHTML += `
             <div> 
-                <img src = '${recipe.image}'> 
-                <h2> ${recipe.name} </h2>
+                <img src='${recipe.imageURL}' alt="Recipe Image"> 
+                <h2> ${recipe.name} ${recipe.id}</h2>
                 <p> ${recipe.description} </p>
             </div>
             `
@@ -118,12 +155,18 @@ async function getRecipes() {
     }
 
 }
-
+//TODO
 async function updateRecipe(id) {
+    let doc = {
+        id: 1,
+        name: 'Creative Genius',
+        description: "Just a penguin going to work",
+        imageURL: "/uploads/test.png"
+    }
     try {
-        let response = await fetch(`/recipes/${id}`, (req, res), {
+        let response = await fetch(`/recipes/${id}`, {
             method: 'PUT',
-            body: recipeState
+            body: JSON.stringify(doc)
         })
         console.log(response);
     } catch (error) {

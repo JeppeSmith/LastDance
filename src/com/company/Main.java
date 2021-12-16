@@ -19,6 +19,7 @@ public class Main {
 
             try {
                 List<FileItem> files = req.getFormData("files");
+                System.out.println(files);
                 imageUrl = db.uploadImage(files.get(0));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -58,7 +59,7 @@ public class Main {
             int id = Integer.parseInt(req.getParam("id"));
           //  db.updateRecipe(recipe, id);  Fixa så att
             //System.out.println(recipe);
-
+            
             res.send("Update recipe OK");
         });
 
@@ -68,7 +69,7 @@ public class Main {
             res.send("Delete recipe OK");
         });
 
-
+        
 
 
 

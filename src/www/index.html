@@ -5,8 +5,17 @@
   </title>
 </head>
 <body>
-  <a onClick="getRecipes()">X</a>
-  <a onClick="getFiles()">X</a>
+  <a onClick="getRecipes()">Get recipes</a>
+  <a onClick="updateRecipe(1)">Update recipe 1</a>
+  <a onClick="getFiles()">Get files</a>
+  <a onClick="deleteRecipe()">Delete 1</a>
+  <a onClick="postRecipe()">Create 1</a>
+  <a onClick="getRecipeById(2)">Get 2</a>
+  <a onClick="getRecipeByName('Creative Genius')">Get Cutie</a>
+  <form>
+    <input type="file" id="file">
+  </form>
+  <a onClick="postFile()">POST</a>
   <div class="Returns">
 
   </div>
