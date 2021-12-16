@@ -44,7 +44,7 @@ async function getFiles(){
     try {
         let response = await fetch('/files')
         files = response.json();
-        let html = document.querySelector('')
+        let html = document.querySelector('').files
         html.innerHTML = ""
         files.map(file => {
             html +=
