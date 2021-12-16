@@ -80,7 +80,9 @@ public class Main {
 
   
         app.delete("/files/:id", (request, response) -> {
-            Recipe file = (Recipe) request.getBody(Recipe.class);
+            //Recipe file = (Recipe) request.getBody(Recipe.class);
+            //db funktion som hämtar pathen till filen som ska tas bort och tar sedan bort den
+            
             //db.deleteFile(file.getName(), file.getimageURL());
             response.send("Delete image OK");
         });

@@ -3,7 +3,9 @@ package com.company;
 import express.utils.Utils;
 import org.apache.commons.fileupload.FileItem;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Database {
     public Database() {
         try {
             conn = DriverManager.getConnection("jdbc:sqlite:Ny_databas_Grupp5.db"); //insert name of database
+            deleteRecipe(3);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -39,7 +42,6 @@ public class Database {
 
         return recipes;
     }
-
 
     public Recipe getRecipeById(int id) {
         Recipe recipe = null;
@@ -111,18 +113,29 @@ public class Database {
             e.printStackTrace();
         }
     } */
-
-
+    public void deleteFile(String path){
+        File f = new File(path); // Creates a new file at /uploads/"image name"
+        Path p = Paths.get("/src/www", f.getPath()); // Creates a path with src/www + f
+        String absolutePath = System.getProperty("user.dir"); // Gets current project location
+        f = new File(absolutePath + p); // Re init f to full path
+        f.delete(); // Deletes f
+    }
+    
     public void deleteRecipe(int id){
 
         try {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM recipes WHERE id = ?;");
+            PreparedStatement stmt = conn.prepareStatement("SELECT imageURL from recipes WHERE id = ? ");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            String path = rs.getString(1);
+            deleteFile(path);
+
+            stmt = conn.prepareStatement("DELETE FROM recipes WHERE id = ?;");
             stmt.setInt(1,id);
             stmt.executeUpdate();
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            System.out.println("error creating recipe");
+            System.out.println("error deleting recipe");
         }
     }
 

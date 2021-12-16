@@ -5,10 +5,8 @@ let file = {}
 let files = []
 //TODO:
 /*
-    get files
     delete file
     update recipe
-
 */
 
 async function postRecipe() {
