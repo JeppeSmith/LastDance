@@ -1,4 +1,4 @@
-package com.doit;
+package com.company;
 
 import express.Express;
 import express.middleware.Middleware;
