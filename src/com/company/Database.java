@@ -5,11 +5,14 @@ import org.apache.commons.fileupload.FileItem;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import javax.swing.*;
 
 public class Database {
 
@@ -145,11 +148,19 @@ public class Database {
     }
 
     public void deleteFile(String fileURL) {
-        File f = new File(fileURL);
-        Path p = Paths.get("src/www", f.getPath());
-        String absolutePath = System.getProperty("user.dir");
-        f = new File(absolutePath + p);
-        f.delete();
+        try {
+            File f = new File(fileURL);
+            Path p = Paths.get("src/www", f.getPath());
+            String absolutePath = System.getProperty("user.dir");
+            f = new File(absolutePath + p);
+
+            if(f.delete())
+                System.out.println("file deleted");
+            else System.out.println("error, file not deleted");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
