@@ -1,4 +1,4 @@
-package com.doit;
+package com.company;
 
 import express.utils.Utils;
 import org.apache.commons.fileupload.FileItem;
@@ -6,7 +6,6 @@ import org.apache.commons.fileupload.FileItem;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
 import java.sql.*;
-import java.time.Instant;
 import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -131,14 +130,13 @@ public class Database {
 
         String imageUrl = "/uploads/" + image.getName();
 
-        // open an ObjectOutputStream with the path to the uploads folder in the "www" directory
         try (var os = new FileOutputStream(Paths.get("src/www" + imageUrl).toString())) {
             // get the required byte[] array to save to a file
             // with file.get()
             os.write(image.get());
         } catch (Exception e) {
             e.printStackTrace();
-            // if image is not saved, return null
+            System.out.println("error uploading image");
             return null;
         }
 
