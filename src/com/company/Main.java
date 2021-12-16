@@ -70,17 +70,18 @@ public class Main {
             res.send(imageUrl);
         });
 
-
-       app.get("/files", (req, res) -> {
-            //List<Recipe> files = db.getFiles();
-            //res.json(files);
-        });
-
   
         app.delete("/files/", (request, response) -> {
             Recipe file = (Recipe) request.getBody(Recipe.class);
             db.deleteFile(file.getfileURL());
             response.send("din fil kanske togs bort, ingen vet");
+        });
+
+        app.get("/files/paths", (req, res) -> {
+
+           List<Recipe> filePaths = db.getfilePaths();
+           res.json(filePaths);
+
         });
 
 
@@ -91,7 +92,7 @@ public class Main {
         }
 
         app.listen(2021); // defaults to port 80
-        System.out.println("Server started on port 3000");
+        System.out.println("Server started on port 2021");
 
     }
 }

@@ -163,5 +163,23 @@ public class Database {
         }
     }
 
+    public List<Recipe> getfilePaths() {
+        List<Recipe> filePaths = null;
+
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT fileURL FROM recipes");
+
+            ResultSet rs = stmt.executeQuery();
+
+            Recipe[] recipesFromRS = (Recipe[]) Utils.readResultSetToObject(rs, Recipe[].class);
+            filePaths = List.of(recipesFromRS);
+
+        } catch (SQLException | JsonProcessingException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return filePaths;
+    }
 
 }
