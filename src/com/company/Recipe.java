@@ -7,6 +7,7 @@ public class Recipe {
     private String name;
     private String description;
     private String imageURL;
+    private String fileURL;
 
 
     public Recipe() {
@@ -62,5 +63,13 @@ public class Recipe {
 
     public void setimageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public String getfileURL() {
+        return fileURL;
+    }
+
+    public void setfileURL(String fileURL) {
+        this.fileURL = fileURL;
     }
 }

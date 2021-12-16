@@ -14,17 +14,6 @@ public class Main {
         Express app = new Express();
         Database db = new Database();
 
-        app.post("/uploads", (req, res) -> {
-            String imageUrl = null;
-
-            try {
-                List<FileItem> files = req.getFormData("files");
-                imageUrl = db.uploadImage(files.get(0));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            res.send(imageUrl);
-        });
 
         app.get("/recipes", (req, res) -> {
             List<Recipe> recipes = db.getRecipes();
@@ -69,6 +58,17 @@ public class Main {
         });
 
 
+        app.post("/uploads", (req, res) -> {
+            String imageUrl = null;
+
+            try {
+                List<FileItem> files = req.getFormData("files");
+                imageUrl = db.uploadImage(files.get(0));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            res.send(imageUrl);
+        });
 
 
        app.get("/files", (req, res) -> {
@@ -79,10 +79,9 @@ public class Main {
   
         app.delete("/files/:id", (request, response) -> {
             Recipe file = (Recipe) request.getBody(Recipe.class);
-            //db.deleteFile(file.getName(), file.getimageURL());
+            db.deleteFile(file.getfileURL());
             response.send("Delete image OK");
         });
-        
 
 
         try {

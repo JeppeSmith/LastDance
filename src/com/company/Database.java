@@ -3,7 +3,9 @@ package com.company;
 import express.utils.Utils;
 import org.apache.commons.fileupload.FileItem;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.List;
@@ -127,7 +129,7 @@ public class Database {
 
     public String uploadImage(FileItem image) {
 
-        String imageUrl = "/uploads/" + image.getName();
+        String imageUrl = "/uploads/img/" + image.getName();
 
         try (var os = new FileOutputStream(Paths.get("src/www" + imageUrl).toString())) {
             // get the required byte[] array to save to a file
@@ -141,4 +143,14 @@ public class Database {
 
         return imageUrl;
     }
+
+    public void deleteFile(String fileURL) {
+        File f = new File(fileURL);
+        Path p = Paths.get("src/www", f.getPath());
+        String absolutePath = System.getProperty("user.dir");
+        f = new File(absolutePath + p);
+        f.delete();
+    }
+
+
 }
