@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Upload file</title>
+</head>
+<body>
+	<header class="header-basic">
+		<div class="header-limiter"> 
+			<h1><a href="index.html" onclick="saveId(1,1)">My PIMS</a></h1>
+
+			<nav>
+				<a href="./notes.html" class="catBtn">NOTES</a>
+				<a href="./files.html" class="catBtn">FILES</a>
+			</nav>
+			
+		</div>
+	</header>
+
+	<main>
+	
+	<div id="form_container">	
+		<h1><a>Upload file</a></h1>
+		<form id="form_35256" class="appintro" enctype="multipart/form-data" method="post" action="">
+									
+		<ul >
+			
+		<li id="li_1" >
+		<label class="description" for="element_1">Title </label>
+		<div>
+			<input id="element_1" name="element_1" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div> 
+		</li>		<li id="li_4" >
+		<!-- <label class="description" for="element_4">Category </label>
+		<div>
+		<select class="element select medium" id="element_4" name="element_4"> 
+			<option value="" selected="selected"></option>
+				<option value="1" >File</option>
+
+		</select>
+		</div>
+		</li> // uncomment if category is needed. In this form only "File" category is connected  --> 
+		<li id="li_2" >
+		<label class="description" for="element_2">Choose a file </label>
+		<div>
+			<input id="element_2" name="element_2" class="element file" type="file"/> 
+		</div>  
+		</li>
+				
+		<li class="buttons">
+			    <input type="hidden" name="form_id" value="35256" />
+			    
+				<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
+		</li>
+			</ul>* All fields are required
+		</form>	
+		<div id="form_footer">
+			<h1><a></a></h1>
+		</div>
+	</div>
+	
+	</main>
+	
+	<footer>
+	</footer>
+    <script src="..."></script> 
+</body>
+</html>
