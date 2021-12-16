@@ -56,7 +56,7 @@ public class Main {
         app.put("/recipes/:id", (req, res) -> {
             Recipe recipe = (Recipe) req.getBody(Recipe.class);
             int id = Integer.parseInt(req.getParam("id"));
-          //  db.updateRecipe(recipe, id);  Fixa så att
+            db.updateRecipe(recipe, id);
             //System.out.println(recipe);
 
             res.send("Update recipe OK");
@@ -67,7 +67,6 @@ public class Main {
             db.deleteRecipe(recipe.getId());
             res.send("Delete recipe OK");
         });
-
 
 
 

@@ -95,12 +95,11 @@ public class Database {
         return recipes;
     }
 
-    /* public void updateRecipe(Recipe recipe){
+        public void updateRecipe(Recipe recipe){
 
         try {
 
             PreparedStatement stmt = conn.prepareStatement("UPDATE recipes SET name = ?, description = ?, imageURL = ? WHERE id = ?");
-            System.out.println(stmt);
             stmt.setString(1, recipe.getName());
             stmt.setString(2, recipe.getDescription());
             stmt.setString(3, recipe.getimageURL());
@@ -110,7 +109,7 @@ public class Database {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } */
+    }
 
 
     public void deleteRecipe(int id){
