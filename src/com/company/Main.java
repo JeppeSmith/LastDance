@@ -77,10 +77,10 @@ public class Main {
         });
 
   
-        app.delete("/files/:id", (request, response) -> {
+        app.delete("/files/", (request, response) -> {
             Recipe file = (Recipe) request.getBody(Recipe.class);
             db.deleteFile(file.getfileURL());
-            response.send("Delete image OK");
+            response.send("din fil kanske togs bort, ingen vet");
         });
 
 
