@@ -55,8 +55,8 @@ public class Main {
 
         app.put("/recipes/:id", (req, res) -> {
             Recipe recipe = (Recipe) req.getBody(Recipe.class);
-            int id = Integer.parseInt(req.getParam("id"));
-            db.updateRecipe(recipe, id);
+            //int id = Integer.parseInt(req.getParam("id"));
+            db.updateRecipe(recipe);
             //System.out.println(recipe);
 
             res.send("Update recipe OK");
