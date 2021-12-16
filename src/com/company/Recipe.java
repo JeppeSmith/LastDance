@@ -1,4 +1,4 @@
-package com.doit;
+package com.company;
 
 
 public class Recipe {
