@@ -106,11 +106,72 @@ async function getRecipeById(id) {
 
 }
 function manageRecipe(index){
+    let html = document.querySelector('.cont');
+    html.innerHTML = `
+       <div id="form_container">	
+		<h1><a></a></h1>
+		<form id="form_35256" class="appintro" enctype="multipart/form-data" method="post" action="">
+									
+		<ul >
+			
+		<li id="li_1" >
+		<label class="description" for="element_1">Title </label>
+		<div>
+			<input id="element_1" name="element_1" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div> 
+		</li>
+		<!-- <li id="li_4" >
+		<label class="description" for="element_4">Category </label>
+		<div>
+		<select class="element select medium" id="element_4" name="element_4"> 
+			<option value="" selected="selected"></option>
+				<option value="1" >Note</option>
+
+		</select>
+		</div> 
+		</li>  // uncomment if category is needed. In this form only "File" category is connected  -->
+		<li id="li_2" >
+		<label class="description" for="element_2">Update attachment </label>
+		<div>
+			<input id="element_2" name="element_2" class="element file" type="file"/>
+            <img id="element_img" src=""> 
+		</div>  
+		</li>		<li id="li_3" >
+		<label class="description" for="element_3">Content </label>
+		<div>
+			<textarea id="element_3" name="element_3" class="element textarea medium"></textarea> 
+		</div> 
+		</li>
+		<div style="display: flex">	
+		<li class="buttons">
+            <input type="hidden" name="form_id" value="35256" />
+            <a onClick="updateRecipe()">Update</a>
+		</li>
+			
+		<li class="buttons">
+			    <input type="hidden" name="form_id" value="35256" />		    
+				<a onClick="deleteRecipe()">Delete</a>
+		</li>
+		</div>* All fields are required
+		</ul>
+		</form>	
+		<div id="form_footer">			
+		</div>
+	</div>
+    `
     console.log(recipes[index])
     recipe = recipes[index]
-    let title = document.querySelector('#element_1').value
-    title = recipes[index].name
-    console.log(title)
+    document.querySelector('#element_1').value = recipes[index].name
+    document.querySelector('#element_3').value = recipes[index].description
+
+    //img under id="element_2"
+    //Sätt dens src="" till nuvarande bilden
+    //Om personen laddar upp en bild -->
+        //Byt bild som visas
+        //När receptet sparas skicka med nya bilden samt ta bort gamla
+    //Om personen inte laddar upp en bild 
+        //Felhantering för att den är tom/välja nya ifall det finns
+        //Ladda upp nya
 }
 async function getRecipeByName(name) {
     try {
@@ -153,7 +214,7 @@ async function getRecipes() {
                 <div class="container">
                     <h2> ${recipe.name} ${recipe.id}</h2>
                     <p> ${recipe.description} </p>
-                    <a onClick="manageRecipe(${index})" href="manage_note.html">Manage Recipe</a>
+                    <a onClick="manageRecipe(${index})">Manage Recipe</a>
                 </div>
             </div>
             `
@@ -165,15 +226,17 @@ async function getRecipes() {
 
 }
 //TODO
-async function updateRecipe(id) {
+async function updateRecipe() {
+    
     let doc = {
-        id: 1,
-        name: 'Creative Genius',
-        description: "Just a penguin going to work",
-        imageURL: "/uploads/test.png"
+        id: recipe.id,
+        name: document.querySelector('#element_1').value,
+        description: document.querySelector('#element_3').value,
+        imageURL: "/uploads/" + document.querySelector('#element_2').files[0].name
     }
     try {
-        let response = await fetch(`/recipes/${id}`, {
+        console.log(doc)
+        let response = await fetch(`/recipes/${doc.id}`, {
             method: 'PUT',
             body: JSON.stringify(doc)
         })
