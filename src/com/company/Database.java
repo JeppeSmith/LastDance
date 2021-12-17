@@ -6,6 +6,9 @@ import org.apache.commons.fileupload.FileItem;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -180,6 +183,12 @@ public class Database {
         }
 
         return filePaths;
+    }
+
+    public static void downloadFile(URL url, String fileName) throws Exception {
+        try (InputStream in = url.openStream()) {
+            Files.copy(in, Paths.get(fileName));
+        }
     }
 
 }
