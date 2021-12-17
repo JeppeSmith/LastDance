@@ -43,7 +43,14 @@ async function deleteRecipe() {
         console.log(error)
     }
 }
-
+async function downloadFile(){
+    try {
+        let response = await fetch(`/files/${15}`) //Hårdkodat laddar ner id 15 
+        console.log(response)
+    } catch (error) {
+        console.log(error)
+    }
+}
 async function postFile() {
     try {
         let files = document.querySelector('#element_2').files
@@ -151,6 +158,7 @@ function manageRecipe(index){
 		<li class="buttons">
             <input type="hidden" name="form_id" value="35256" />
             <button onClick="updateRecipe()">Update</button>
+            <button onClick="downloadFile('${recipes[index].imageURL}')">Download File?</button>
 		</li>
 			
 		<li class="buttons">

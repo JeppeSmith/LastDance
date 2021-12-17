@@ -4,9 +4,11 @@ import express.utils.Utils;
 import org.apache.commons.fileupload.FileItem;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -170,7 +172,7 @@ public class Database {
             e.printStackTrace();
         }
     }
-
+    
     public List<Recipe> getfilePaths() {
         List<Recipe> filePaths = null;
 
@@ -190,9 +192,26 @@ public class Database {
         return filePaths;
     }
 
-    public static void downloadFile(URL url, String fileName) throws Exception {
+    public void downloadFile(URL url, String localFile) throws Exception {
+        String localPath = System.getProperty(("user.home"))+"\\";
+        localPath += localFile;
+        System.out.println(localPath);
         try (InputStream in = url.openStream()) {
-            Files.copy(in, Paths.get(fileName));
+            //File tempFile = new File(localPath);
+            //Path path = Files.createTempFile(localPath, "");
+            //boolean exists = tempFile.exists();
+            Files.copy(in, Paths.get(localPath));
+        }
+        catch (FileAlreadyExistsException e) {
+            System.out.println(localPath + " already exists");
+            e.getCause();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println(localFile +" not found on " + url);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
         }
     }
 

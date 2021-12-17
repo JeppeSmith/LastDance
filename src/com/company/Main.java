@@ -5,6 +5,8 @@ import express.middleware.Middleware;
 import org.apache.commons.fileupload.FileItem;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -68,6 +70,29 @@ public class Main {
                 e.printStackTrace();
             }
             res.send(imageUrl);
+        });
+        app.get("/files/:id", (req, res) -> {
+            int id = Integer.parseInt(req.getParam("id")); //Kan inte skicka get med body så skickar id 
+            Recipe file = db.getRecipeById(id); //hämtar sedan receptet med det id't och sedan följer din kod som vanligt
+            System.out.println(file);
+            URL url = null;
+            String localFile = file.getName();
+            try {
+                url = new URL("http://localhost:2021/" + file.getimageURL());
+                System.out.println(url);
+            } catch (MalformedURLException e) {
+                res.send("error getting URL");
+                e.printStackTrace();
+            }
+            try {
+                db.downloadFile(url,localFile );
+            } catch (Exception e) {
+                res.send(e.getMessage());
+                e.printStackTrace();
+                res.send("error downloading file");
+                return;
+            }
+            res.send("downloaded " + localFile + " to " + System.getProperty(("user.home")));
         });
 
   
