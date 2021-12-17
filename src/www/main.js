@@ -1,8 +1,6 @@
 let recipe = {}
 let recipes = []
 
-let file = {}
-let files = []
 //TODO:
 /*
     delete file
@@ -10,11 +8,14 @@ let files = []
 */
 
 async function postRecipe() {
+    let x = "/uploads/" + document.querySelector('#element_2').files[0].name
     let doc = {
-        name: 'Creative Genius',
-        description: "Just a penguin going to work",
-        imageURL: "/uploads/test.png"
+        name: document.querySelector('#element_1').value,
+        description: document.querySelector('#element_3').value,
+        imageURL: x
     }
+    
+    postFile()
     try {
         let response = await fetch('/recipes', {
             method: 'POST',
@@ -29,16 +30,11 @@ async function postRecipe() {
 
 async function deleteRecipe() {
     try {
-        id = 1
-        let doc = {
-            id: 1,
-            name: 'Creative Genius',
-            description: "Just a penguin going to work",
-            imageURL: "/uploads/test.png"
-        }
+        let id = recipe.id
+        console.log(recipe)
         let response = await fetch(`/recipes/${id}`, {
             method: 'DELETE',
-            body: JSON.stringify(doc) 
+            body: JSON.stringify(recipe) 
         });
         console.log(response)
     } catch (error) {
@@ -48,7 +44,7 @@ async function deleteRecipe() {
 
 async function postFile() {
     try {
-        let files = document.querySelector("#file").files
+        let files = document.querySelector('#element_2').files
         let formData = new FormData();
         for(let file of files){
             formData.append('files', file, file.name)
@@ -95,7 +91,7 @@ async function deleteFile(id) {
 async function getRecipeById(id) {
     try {
         let response = await fetch(`/recipes/${id}`)
-        recipe = await response.json();
+        let recipe = await response.json();
         let html = document.querySelector('.Returns');
         html.innerHTML = `
         <div>
@@ -109,7 +105,13 @@ async function getRecipeById(id) {
     }
 
 }
-
+function manageRecipe(index){
+    console.log(recipes[index])
+    recipe = recipes[index]
+    let title = document.querySelector('#element_1').value
+    title = recipes[index].name
+    console.log(title)
+}
 async function getRecipeByName(name) {
     try {
         let response = await fetch(`recipes/name/${name}`)
@@ -118,10 +120,12 @@ async function getRecipeByName(name) {
         let html = document.querySelector('.Returns');
         recipe.map(recipe =>{
         html.innerHTML = `
-        <div>
+        <div class="card">
             <img src='${recipe.imageURL}' alt="Recipe Image"> 
-            <h2> ${recipe.name} ${recipe.id}</h2>
-            <p> ${recipe.description} </p>
+            <div class="container">
+                <h2> ${recipe.name} ${recipe.id}</h2>
+                <p> ${recipe.description} </p>
+            </div>
         </div> 
     `
     })
@@ -135,18 +139,25 @@ async function getRecipeByName(name) {
 async function getRecipes() {
     try {
         let response = await fetch('/recipes');
-        recipes = await response.json();
-        console.log(recipes)
-        let html = document.querySelector('.Returns');
+        resp = await response.json();
+        console.log(resp)
+        let html = document.querySelector('.all-cards');
         html.innerHTML = '';
-        recipes.map(recipe => {
+        let index = 0;
+        resp.map(recipe => {
+            recipes.push(recipe)
+            
             html.innerHTML += `
-            <div> 
+            <div class="card"> 
                 <img src='${recipe.imageURL}' alt="Recipe Image"> 
-                <h2> ${recipe.name} ${recipe.id}</h2>
-                <p> ${recipe.description} </p>
+                <div class="container">
+                    <h2> ${recipe.name} ${recipe.id}</h2>
+                    <p> ${recipe.description} </p>
+                    <a onClick="manageRecipe(${index})" href="manage_note.html">Manage Recipe</a>
+                </div>
             </div>
             `
+            index++;
         })
     } catch (error) {
         console.log(error)

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <title>MyNotes</title>
 </head>
-<body>
+<body onload="getRecipes()">
 	<header class="header-basic">
 		<div class="header-limiter"> 
 			<h1><a href="index.html" onclick="saveId(1,1)">My PIMS</a></h1>
@@ -22,7 +22,7 @@
 
 	<main>
 	<section>
-	<div class="all-cards" id="all-cards" style="height; 600px";><h2>here we insert the code that shows listing of 6 random (?) cards from notes and files <br>lll <br>lll<br>lll<br>lll<br>lll<br>lll<br></h2></div> <!-- here you insert teh code that shows listing of 6 random cards from notes and files. I think you can remove the style of height: 600px! -->
+	<div class="all-cards" id="all-cards" style="height: 600px";><h2>here we insert the code that shows listing of 6 random (?) cards from notes and files <br>lll <br>lll<br>lll<br>lll<br>lll<br>lll<br></h2></div> <!-- here you insert teh code that shows listing of 6 random cards from notes and files. I think you can remove the style of height: 600px! -->
 	</section>
 	<section>
 	<div style="display: flex; justify-content: center; margin:20px;">
@@ -34,6 +34,6 @@
 	
 	<footer>
 	</footer>
-    <script src="..."></script> 
+    <script src="main.js"></script> 
 </body>
 </html>

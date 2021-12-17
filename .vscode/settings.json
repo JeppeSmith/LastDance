@@ -2,6 +2,7 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "libs/java-express-0.3.5.jar",
-        "libs/sqlite-jdbc-3.32.3.2.jar"
+        "libs/sqlite-jdbc-3.32.3.2.jar",
+        "b:\\Downloads\\Chrome Downloads\\sqlite-jdbc-3.32.3.2.jar"
     ]
 }
