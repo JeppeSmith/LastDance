@@ -103,7 +103,7 @@ public class Main {
                 res.send("error downloading file");
                 e.printStackTrace();
             }
-
+            res.send("downloaded " + localFile + " from " + url);
         });
 
 
