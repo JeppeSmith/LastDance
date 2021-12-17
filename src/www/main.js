@@ -7,6 +7,8 @@ let recipes = []
     update recipe
 */
 
+
+
 async function postRecipe() {
     let x = "/uploads/" + document.querySelector('#element_2').files[0].name
     let doc = {
@@ -107,6 +109,7 @@ async function getRecipeById(id) {
 }
 function manageRecipe(index){
     let html = document.querySelector('.cont');
+    recipe = recipes[index]
     html.innerHTML = `
        <div id="form_container">	
 		<h1><a></a></h1>
@@ -134,8 +137,10 @@ function manageRecipe(index){
 		<label class="description" for="element_2">Update attachment </label>
 		<div>
 			<input id="element_2" name="element_2" class="element file" type="file"/>
-            <img id="element_img" src=""> 
-		</div>  
+            <div class = "imageXD">
+            <img id="element_img" src="${recipes[index].imageURL}"> 
+		</div>
+        </div>   
 		</li>		<li id="li_3" >
 		<label class="description" for="element_3">Content </label>
 		<div>
@@ -145,12 +150,12 @@ function manageRecipe(index){
 		<div style="display: flex">	
 		<li class="buttons">
             <input type="hidden" name="form_id" value="35256" />
-            <a onClick="updateRecipe()">Update</a>
+            <button onClick="updateRecipe()">Update</button>
 		</li>
 			
 		<li class="buttons">
 			    <input type="hidden" name="form_id" value="35256" />		    
-				<a onClick="deleteRecipe()">Delete</a>
+				<button onClick="deleteRecipe()">Delete</button>
 		</li>
 		</div>* All fields are required
 		</ul>
@@ -160,7 +165,7 @@ function manageRecipe(index){
 	</div>
     `
     console.log(recipes[index])
-    recipe = recipes[index]
+    
     document.querySelector('#element_1').value = recipes[index].name
     document.querySelector('#element_3').value = recipes[index].description
 
@@ -172,7 +177,24 @@ function manageRecipe(index){
     //Om personen inte laddar upp en bild 
         //Felhantering för att den är tom/välja nya ifall det finns
         //Ladda upp nya
+        document.getElementById('element_2').onchange = function() {
+            postFile()
+            setTimeout(1000)
+            console.log(document.getElementById('element_2').files[0].name)
+            let x =  document.querySelector(".imageXD")
+            x.innerHTML = ""
+            x.innerHTML += `
+            <img id="element_img" src="/uploads/${document.getElementById('element_2').files[0].name}">
+            `
+        };
+        
+
+
 }
+
+
+
+
 async function getRecipeByName(name) {
     try {
         let response = await fetch(`recipes/name/${name}`)
@@ -214,7 +236,7 @@ async function getRecipes() {
                 <div class="container">
                     <h2> ${recipe.name} ${recipe.id}</h2>
                     <p> ${recipe.description} </p>
-                    <a onClick="manageRecipe(${index})">Manage Recipe</a>
+                    <button onClick="manageRecipe(${index})">Manage Recipe</button>
                 </div>
             </div>
             `
