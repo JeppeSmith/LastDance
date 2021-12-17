@@ -4,9 +4,11 @@ import express.Express;
 import express.middleware.Middleware;
 import org.apache.commons.fileupload.FileItem;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -100,10 +102,10 @@ public class Main {
             try {
                 db.downloadFile(url,localFile );
             } catch (Exception e) {
-                res.send("error downloading file");
+                res.send(e.getMessage());
                 e.printStackTrace();
             }
-            res.send("downloaded " + localFile + " from " + url);
+            res.send("downloaded " + localFile + " to " + System.getProperty(("user.home")));
         });
 
 

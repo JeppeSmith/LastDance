@@ -3,11 +3,9 @@ package com.company;
 import express.utils.Utils;
 import org.apache.commons.fileupload.FileItem;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -192,8 +190,15 @@ public class Database {
         try (InputStream in = url.openStream()) {
             Files.copy(in, Paths.get(localPath));
         }
+        catch (FileAlreadyExistsException e) {
+            e.notifyAll(); }
+        catch (FileNotFoundException e){
+            e.notify();
+
+        }
         catch (Exception e) {
             e.printStackTrace();
+
         }
 
     }
