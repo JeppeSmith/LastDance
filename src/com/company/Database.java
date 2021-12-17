@@ -154,14 +154,18 @@ public class Database {
     public void deleteFile(String fileURL) {
         try {
             File f = new File(fileURL);
-            Path p = Paths.get("src/www", f.getPath());
+            Path p = Paths.get("/src/www", f.getPath());
             String absolutePath = System.getProperty("user.dir");
+            System.out.println(absolutePath);
+
             f = new File(absolutePath + p);
-
-            if(f.delete())
+            System.out.println(f + " woopsie");
+            if(f.delete()){
                 System.out.println("file deleted");
-            else System.out.println("error, file not deleted");
-
+            }
+            else{ 
+                System.out.println("error, file not deleted");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
