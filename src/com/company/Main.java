@@ -104,6 +104,8 @@ public class Main {
             } catch (Exception e) {
                 res.send(e.getMessage());
                 e.printStackTrace();
+                res.send("error downloading file");
+                return;
             }
             res.send("downloaded " + localFile + " to " + System.getProperty(("user.home")));
         });
