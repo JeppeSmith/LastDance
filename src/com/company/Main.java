@@ -5,6 +5,8 @@ import express.middleware.Middleware;
 import org.apache.commons.fileupload.FileItem;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -71,7 +73,7 @@ public class Main {
         });
 
   
-        app.delete("/files/", (request, response) -> {
+        app.delete("/files", (request, response) -> {
             Recipe file = (Recipe) request.getBody(Recipe.class);
             db.deleteFile(file.getfileURL());
             response.send("din fil kanske togs bort, ingen vet");
@@ -81,6 +83,24 @@ public class Main {
 
            List<Recipe> filePaths = db.getfilePaths();
            res.json(filePaths);
+
+        });
+
+        app.get("/files", (req, res) -> {
+
+            Recipe file = (Recipe) req.getBody(Recipe.class);
+            URL url = null;
+            String localFile = file.getName();
+            try {
+                url = new URL("http://localhost:2021" + file.getfileURL());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            try {
+                db.downloadFile(url,localFile );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         });
 

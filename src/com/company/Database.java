@@ -185,9 +185,15 @@ public class Database {
         return filePaths;
     }
 
-    public static void downloadFile(URL url, String fileName) throws Exception {
+    public void downloadFile(URL url, String localFile) {
+        String localPath = System.getProperty(("user.home"))+"\\";
+        localPath += localFile;
+        System.out.println(localPath);
         try (InputStream in = url.openStream()) {
-            Files.copy(in, Paths.get(fileName));
+            Files.copy(in, Paths.get(localPath));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
