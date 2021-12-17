@@ -94,11 +94,13 @@ public class Main {
             try {
                 url = new URL("http://localhost:2021" + file.getfileURL());
             } catch (MalformedURLException e) {
+                res.send("error getting URL");
                 e.printStackTrace();
             }
             try {
                 db.downloadFile(url,localFile );
             } catch (Exception e) {
+                res.send("error downloading file");
                 e.printStackTrace();
             }
 
