@@ -14,18 +14,6 @@ public class Main {
         Express app = new Express();
         Database db = new Database();
 
-        app.post("/uploads", (req, res) -> {
-            String imageUrl = null;
-
-            try {
-                List<FileItem> files = req.getFormData("files");
-                System.out.println(files);
-                imageUrl = db.uploadImage(files.get(0));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            res.send(imageUrl);
-        });
 
         app.get("/recipes", (req, res) -> {
             List<Recipe> recipes = db.getRecipes();
@@ -56,8 +44,8 @@ public class Main {
 
         app.put("/recipes/:id", (req, res) -> {
             Recipe recipe = (Recipe) req.getBody(Recipe.class);
-            int id = Integer.parseInt(req.getParam("id"));
-          //  db.updateRecipe(recipe, id);  Fixa så att
+            //int id = Integer.parseInt(req.getParam("id"));
+            db.updateRecipe(recipe);
             //System.out.println(recipe);
             
             res.send("Update recipe OK");
@@ -69,24 +57,32 @@ public class Main {
             res.send("Delete recipe OK");
         });
 
-        
 
+        app.post("/uploads", (req, res) -> {
+            String imageUrl = null;
 
-
-       app.get("/files", (req, res) -> {
-            //List<Recipe> files = db.getFiles();
-            //res.json(files);
+            try {
+                List<FileItem> files = req.getFormData("files");
+                imageUrl = db.uploadImage(files.get(0));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            res.send(imageUrl);
         });
 
   
-        app.delete("/files/:id", (request, response) -> {
-            //Recipe file = (Recipe) request.getBody(Recipe.class);
-            //db funktion som hämtar pathen till filen som ska tas bort och tar sedan bort den
-            
-            //db.deleteFile(file.getName(), file.getimageURL());
-            response.send("Delete image OK");
+        app.delete("/files/", (request, response) -> {
+            Recipe file = (Recipe) request.getBody(Recipe.class);
+            db.deleteFile(file.getfileURL());
+            response.send("din fil kanske togs bort, ingen vet");
         });
-        
+
+        app.get("/files/paths", (req, res) -> {
+
+           List<Recipe> filePaths = db.getfilePaths();
+           res.json(filePaths);
+
+        });
 
 
         try {
@@ -96,7 +92,7 @@ public class Main {
         }
 
         app.listen(2021); // defaults to port 80
-        System.out.println("Server started on port 3000");
+        System.out.println("Server started on port 2021");
 
     }
 }

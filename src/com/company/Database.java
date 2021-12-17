@@ -5,11 +5,15 @@ import org.apache.commons.fileupload.FileItem;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 
 public class Database {
 
@@ -18,7 +22,6 @@ public class Database {
     public Database() {
         try {
             conn = DriverManager.getConnection("jdbc:sqlite:Ny_databas_Grupp5.db"); //insert name of database
-            deleteRecipe(3);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -97,12 +100,11 @@ public class Database {
         return recipes;
     }
 
-    /* public void updateRecipe(Recipe recipe){
+        public void updateRecipe(Recipe recipe){
 
         try {
 
             PreparedStatement stmt = conn.prepareStatement("UPDATE recipes SET name = ?, description = ?, imageURL = ? WHERE id = ?");
-            System.out.println(stmt);
             stmt.setString(1, recipe.getName());
             stmt.setString(2, recipe.getDescription());
             stmt.setString(3, recipe.getimageURL());
@@ -112,14 +114,7 @@ public class Database {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } */
-    public void deleteFile(String path){
-        File f = new File(path); // Creates a new file at /uploads/"image name"
-        Path p = Paths.get("/src/www", f.getPath()); // Creates a path with src/www + f
-        String absolutePath = System.getProperty("user.dir"); // Gets current project location
-        f = new File(absolutePath + p); // Re init f to full path
-        f.delete(); // Deletes f
-    }
+    } 
     
     public void deleteRecipe(int id){
 
@@ -155,4 +150,46 @@ public class Database {
 
         return imageUrl;
     }
+
+    public void deleteFile(String fileURL) {
+        try {
+            File f = new File(fileURL);
+            Path p = Paths.get("src/www", f.getPath());
+            String absolutePath = System.getProperty("user.dir");
+            f = new File(absolutePath + p);
+
+            if(f.delete())
+                System.out.println("file deleted");
+            else System.out.println("error, file not deleted");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Recipe> getfilePaths() {
+        List<Recipe> filePaths = null;
+
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT fileURL FROM recipes");
+
+            ResultSet rs = stmt.executeQuery();
+
+            Recipe[] recipesFromRS = (Recipe[]) Utils.readResultSetToObject(rs, Recipe[].class);
+            filePaths = List.of(recipesFromRS);
+
+        } catch (SQLException | JsonProcessingException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return filePaths;
+    }
+
+    public static void downloadFile(URL url, String fileName) throws Exception {
+        try (InputStream in = url.openStream()) {
+            Files.copy(in, Paths.get(fileName));
+        }
+    }
+
 }
