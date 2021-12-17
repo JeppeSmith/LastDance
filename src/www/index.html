@@ -1,23 +1,39 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>
-    First
-  </title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>MyNotes</title>
 </head>
 <body>
-  <a onClick="getRecipes()">Get recipes</a>
-  <a onClick="updateRecipe(1)">Update recipe 1</a>
-  <a onClick="getFiles()">Get files</a>
-  <a onClick="deleteRecipe()">Delete 1</a>
-  <a onClick="postRecipe()">Create 1</a>
-  <a onClick="getRecipeById(2)">Get 2</a>
-  <a onClick="getRecipeByName('Creative Genius')">Get Cutie</a>
-  <form>
-    <input type="file" id="file">
-  </form>
-  <a onClick="postFile()">POST</a>
-  <div class="Returns">
+	<header class="header-basic">
+		<div class="header-limiter"> 
+			<h1><a href="index.html" onclick="saveId(1,1)">My PIMS</a></h1>
 
-  </div>
-  <script src="main.js"></script>
+			<nav>
+				<a href="./notes.html" class="catBtn">NOTES</a>
+				<a href="./files.html" class="catBtn">FILES</a>
+			</nav>
+			
+		</div>
+	</header>
+
+	<main>
+	<section>
+	<div class="all-cards" id="all-cards" style="height; 600px";><h2>here we insert the code that shows listing of 6 random (?) cards from notes and files <br>lll <br>lll<br>lll<br>lll<br>lll<br>lll<br></h2></div> <!-- here you insert teh code that shows listing of 6 random cards from notes and files. I think you can remove the style of height: 600px! -->
+	</section>
+	<section>
+	<div style="display: flex; justify-content: center; margin:20px;">
+		<a href="./create_note.html" class="catBtn">CREATE NOTE</a>
+		<a href="./upload_file.html" class="catBtn">UPLOAD FILE</a>
+	</div>
+	</section>
+	</main>
+	
+	<footer>
+	</footer>
+    <script src="..."></script> 
 </body>
+</html>
