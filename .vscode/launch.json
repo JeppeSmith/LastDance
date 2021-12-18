@@ -9,6 +9,13 @@
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "com.company.Main",
+            "projectName": "LastDance_db47168"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "com.company.Main",
             "projectName": "LastDance_be589bec"
         },
         {

@@ -214,7 +214,7 @@ async function getRecipeByName(name) {
         <div class="card">
             <img src='${recipe.imageURL}' alt="Recipe Image"> 
             <div class="container">
-                <h2> ${recipe.name} ${recipe.id}</h2>
+                <h2> ${recipe.name}</h2>
                 <p> ${recipe.description} </p>
             </div>
         </div> 
