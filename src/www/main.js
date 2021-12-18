@@ -43,6 +43,7 @@ async function deleteRecipe() {
         console.log(error)
     }
 }
+/*
 async function downloadFile(){
     try {
         let response = await fetch(`/files/${15}`) //Hårdkodat laddar ner id 15 
@@ -51,6 +52,7 @@ async function downloadFile(){
         console.log(error)
     }
 }
+*/
 async function postFile() {
     try {
         let files = document.querySelector('#element_2').files
@@ -64,6 +66,7 @@ async function postFile() {
             body: formData
         })
         console.log(response)
+        recipe.imageURL = files[0].name
     } catch (error) {
         console.log(error)
     }
@@ -104,8 +107,8 @@ async function getRecipeById(id) {
         let html = document.querySelector('.Returns');
         html.innerHTML = `
         <div>
-             <img src='${recipe.imageURL}' alt="Recipe Image"> 
-                <h2> ${recipe.name} ${recipe.id}</h2>
+             <img src='${recipe.imageURL}' alt="Recipe File"> 
+                <h2> ${recipe.name}
                 <p> ${recipe.description} </p>
         </div>
     `
@@ -158,7 +161,6 @@ function manageRecipe(index){
 		<li class="buttons">
             <input type="hidden" name="form_id" value="35256" />
             <button onClick="updateRecipe()">Update</button>
-            <button onClick="downloadFile('${recipes[index].imageURL}')">Download File?</button>
 		</li>
 			
 		<li class="buttons">
@@ -240,9 +242,9 @@ async function getRecipes() {
             
             html.innerHTML += `
             <div class="card"> 
-                <img src='${recipe.imageURL}' alt="Recipe Image"> 
+                <img src='${recipe.imageURL}' alt="Recipe File"> 
                 <div class="container">
-                    <h2> ${recipe.name} ${recipe.id}</h2>
+                    <h2> ${recipe.name}</h2>
                     <p> ${recipe.description} </p>
                     <button onClick="manageRecipe(${index})">Manage Recipe</button>
                 </div>
@@ -257,18 +259,15 @@ async function getRecipes() {
 }
 //TODO
 async function updateRecipe() {
-    
-    let doc = {
-        id: recipe.id,
-        name: document.querySelector('#element_1').value,
-        description: document.querySelector('#element_3').value,
-        imageURL: "/uploads/" + document.querySelector('#element_2').files[0].name
-    }
-    try {
-        console.log(doc)
-        let response = await fetch(`/recipes/${doc.id}`, {
+ 
+        recipe.name =  document.querySelector('#element_1').value,
+        recipe.description = document.querySelector('#element_3').value
+        
+        try {
+            console.log(recipe)
+        let response = await fetch(`/recipes/${recipe.id}`, {
             method: 'PUT',
-            body: JSON.stringify(doc)
+            body: JSON.stringify(recipe)
         })
         console.log(response);
     } catch (error) {
