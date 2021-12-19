@@ -197,14 +197,10 @@ public class Database {
         localPath += localFile;
         System.out.println(localPath);
         try (InputStream in = url.openStream()) {
-            //File tempFile = new File(localPath);
-            //Path path = Files.createTempFile(localPath, "");
-            //boolean exists = tempFile.exists();
             Files.copy(in, Paths.get(localPath));
         }
         catch (FileAlreadyExistsException e) {
             System.out.println(localPath + " already exists");
-            e.getCause();
         }
         catch (FileNotFoundException e) {
             System.out.println(localFile +" not found on " + url);

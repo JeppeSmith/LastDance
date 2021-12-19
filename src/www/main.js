@@ -45,7 +45,7 @@ async function deleteRecipe() {
 }
 async function downloadFile(){
     try {
-        let response = await fetch(`/files/${15}`) //Hårdkodat laddar ner id 15 
+        let response = await fetch(`/files/${20}`) //Hårdkodat laddar ner id 15 
         console.log(response)
     } catch (error) {
         console.log(error)

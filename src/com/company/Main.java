@@ -72,22 +72,28 @@ public class Main {
             res.send(imageUrl);
         });
         app.get("/files/:id", (req, res) -> {
-            int id = Integer.parseInt(req.getParam("id")); //Kan inte skicka get med body så skickar id 
+            int id = Integer.parseInt(req.getParam("id"));
+            System.out.println(id); //Kan inte skicka get med body så skickar id 
             Recipe file = db.getRecipeById(id); //hämtar sedan receptet med det id't och sedan följer din kod som vanligt
             System.out.println(file);
+            //Recipe file = (Recipe) req.getBody(Recipe.class);
             URL url = null;
-            String localFile = file.getName();
+            StringBuffer localFile = new StringBuffer(file.getimageURL());
+            System.out.println(localFile);
+            localFile.delete(0, 9);
+            System.out.println(localFile);
+        
             try {
-                url = new URL("http://localhost:2021/" + file.getimageURL());
+                url = new URL("http://localhost:2021" + file.getimageURL());
                 System.out.println(url);
             } catch (MalformedURLException e) {
                 res.send("error getting URL");
                 e.printStackTrace();
             }
             try {
-                db.downloadFile(url,localFile );
+                db.downloadFile(url, localFile.toString());
             } catch (Exception e) {
-                res.send(e.getMessage());
+                
                 e.printStackTrace();
                 res.send("error downloading file");
                 return;
